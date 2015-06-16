@@ -15,8 +15,8 @@ tags:
   - web_server
 subordinate: false
 provides:
-  database:
-    interface: redis
+    redis-sentinel:
+        interface: redis
 requires:
-    database:
+    redis-master:
         interface: redis
