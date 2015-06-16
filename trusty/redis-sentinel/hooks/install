@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -xe
+
+# install dependencies
+juju-log "Install Ubuntu 14.04 packages"
+apt-get update
+apt-get install -y build-essential tcl8.5 supervisor
+# install redis itself
+juju-log "Install Redis source code /usr/local/src "
+cd /usr/local/src
+wget https://github.com/antirez/redis/archive/2.8.21.tar.gz
+tar xvzf 2.8.21.tar.gz
+cd redis-2.8.21
+make
+make install
+# write sentinel configuration
+cat > /etc/sentinel.conf << EOF
+port 26379
+dir /tmp
+sentinel monitor mymaster IP 6379 2
+sentinel down-after-milliseconds mymaster 30000
+sentinel parallel-syncs mymaster 1
+sentinel failover-timeout mymaster 180000
+EOF
+# Open ports
+open-port 26379
+# write supervisor email simple server configuration
+cat > /etc/supervisor/conf.d/pybossa-email.conf<<EOF
+[program:sentinel]
+command=/usr/local/src/redis-2.8.21/src/reis-sentinel -c /etc/sentinel.conf
+directory=/usr/local/src/redis-2.8.21/
+autostart=true
+autorestart=true
+user=root
+log_stdout=true
+log_stderr=true
+logfile=/var/log/sentinel.log
+logfile_maxbytes=10MB
+logfile_backups=2
+EOF
+# restart supervisor
+/etc/init.d/supervisor restart

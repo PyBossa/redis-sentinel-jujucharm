@@ -1,0 +1,22 @@
+name: redis-sentinel
+summary: Persistent key-value database with network interface
+maintainers:
+ - Marvin Reimer <marvin@scifabric.com>
+ - Daniel Lombraña González <daniel@scifabric.com>
+description: |
+  Redis is a key-value database in a similar vein to memcache but the
+  dataset is non-volatile. Redis additionally provides native support
+  for atomically manipulating and querying data structures such as lists
+  and sets.  The dataset is stored entirely in memory and periodically
+  flushed to disk.
+  This charm provides the Sentinel service
+tags:
+  - application_development
+  - web_server
+subordinate: false
+provides:
+  database:
+    interface: redis
+requires:
+    database:
+        interface: redis
