@@ -26,7 +26,7 @@ EOF
 # Open ports
 open-port 26379/TCP
 # write supervisor email simple server configuration
-cat > /etc/supervisor/conf.d/pybossa-email.conf<<EOF
+cat > /etc/supervisor/conf.d/redis-sentinel.conf<<EOF
 [program:sentinel]
 command=/usr/local/src/redis-2.8.21/src/redis-sentinel -c /etc/sentinel.conf
 directory=/usr/local/src/redis-2.8.21/
