@@ -21,4 +21,4 @@ MY_PORT=`relation-get port`
 
 sed -i.bak -e "s/monitor mymaster.*/monitor mymaster ${MY_HOSTNAME} ${MY_PORT} 2/" /etc/sentinel.conf
 
-supervisorctl restart sentinel || supervisorct start sentinel
+supervisorctl restart sentinel || supervisorctl start sentinel
