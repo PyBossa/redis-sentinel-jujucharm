@@ -17,6 +17,8 @@ subordinate: false
 provides:
     redis-sentinel:
         interface: redis
+    pybossa:
+        interface: sentinel
 requires:
     redis-master:
         interface: redis
