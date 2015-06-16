@@ -28,7 +28,7 @@ open-port 26379/TCP
 # write supervisor email simple server configuration
 cat > /etc/supervisor/conf.d/redis-sentinel.conf<<EOF
 [program:sentinel]
-command=/usr/local/src/redis-2.8.21/src/redis-sentinel -c /etc/sentinel.conf
+command=/usr/local/src/redis-2.8.21/src/redis-sentinel /etc/sentinel.conf
 directory=/usr/local/src/redis-2.8.21/
 autostart=true
 autorestart=true
@@ -39,3 +39,4 @@ logfile=/var/log/sentinel.log
 logfile_maxbytes=10MB
 logfile_backups=2
 EOF
+supervisorctl update
