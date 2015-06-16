@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -ux
 
 # install dependencies
 juju-log "Install Ubuntu 14.04 packages"
@@ -24,7 +24,7 @@ sentinel parallel-syncs mymaster 1
 sentinel failover-timeout mymaster 180000
 EOF
 # Open ports
-open-port 26379
+open-port 26379/TCP
 # write supervisor email simple server configuration
 cat > /etc/supervisor/conf.d/pybossa-email.conf<<EOF
 [program:sentinel]
@@ -39,5 +39,3 @@ logfile=/var/log/sentinel.log
 logfile_maxbytes=10MB
 logfile_backups=2
 EOF
-# restart supervisor
-/etc/init.d/supervisor restart
