@@ -18,7 +18,7 @@ make install
 cat > /etc/sentinel.conf << EOF
 port 26379
 dir /tmp
-sentinel monitor mymaster IP 6379 2
+sentinel monitor mymaster 127.0.0.1 6379 2
 sentinel down-after-milliseconds mymaster 30000
 sentinel parallel-syncs mymaster 1
 sentinel failover-timeout mymaster 180000
